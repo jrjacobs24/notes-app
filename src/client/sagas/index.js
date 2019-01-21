@@ -1,12 +1,39 @@
-import { takeLatest, all, call, put } from 'redux-saga/effects';
+import { takeLatest, takeEvery, all, call, put, select } from 'redux-saga/effects';
+import { LOCATION_CHANGE } from 'connected-react-router';
 import axios from 'axios';
 import * as noteDialogActions from 'actions/noteDialogActions';
 import * as databaseActions from 'actions/databaseActions';
+import { getNotes } from 'reducers/notesReducer';
 
 export default function* rootSaga() {
   yield all([
+    takeEvery(LOCATION_CHANGE, handleLocationChange),
     takeLatest(noteDialogActions.clickSubmitNoteButton, handleNoteSubmit),
   ]);
+
+  /**
+   * If the notes array in the store is empty, fetch notes from the DB
+   */
+  function* handleLocationChange({ payload }) {
+    let notes = yield select(getNotes);
+
+    if (!notes.length) {
+      yield call(fetchNotesFromDB);
+    }
+  }
+
+  /**
+   * Fetch the notes array from the DB
+   */
+  function* fetchNotesFromDB() {
+    try {
+      const fetchNotesResponse = yield call([axios, 'get'], '/getNotes');
+      yield put(databaseActions.receiveNotesFromDB(fetchNotesResponse.data));
+    } catch (e) {
+      console.log(e);
+      return;
+    }
+  }
 
   function* handleNoteSubmit({ payload }) {
     yield call(addNoteToDB, payload);
