@@ -1,0 +1,9 @@
+{
+  "name": "notes-app",
+  "version": "1.0.0",
+  "description": "A React/Redux note taking application setup on an Express server with a JSON DB via lowdb for simple local storage.",
+  "main": "src/client/index.js",
+  "author": "JJ Jacobs <jrjacobs24@gmail.com>",
+  "license": "MIT",
+  "private": false
+}
