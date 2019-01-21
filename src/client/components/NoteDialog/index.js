@@ -4,13 +4,14 @@ import { connect } from 'react-redux';
 import * as noteDialogActions from 'actions/noteDialogActions';
 import { isDialogOpen } from 'reducers/noteDialogReducer';
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
+import NoteForm from 'components/NoteForm';
 
 const NoteDialog = ({ open = false, onClickCancel }) => {
   return (
     <Dialog open={open}>
       <DialogTitle>Add New Note</DialogTitle>
       <DialogContent>
-        Form goes here
+        <NoteForm />
       </DialogContent>
       <DialogActions>
         <Button variant="text" size="small" onClick={onClickCancel}>

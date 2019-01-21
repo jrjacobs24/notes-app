@@ -11,6 +11,7 @@ export default createReducer(
     [screenHeaderActions.clickNewNoteButton]: () => ({
       open: true
     }),
+    [noteDialogActions.clickSubmitNoteButton]: () => initialState,
     [noteDialogActions.clickCancelButton]: () => initialState,
   },
   initialState
