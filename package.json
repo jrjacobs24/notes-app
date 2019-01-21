@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "A React/Redux note taking application setup on an Express server with a JSON DB via lowdb for simple local storage.",
   "scripts": {
-    "client": "yarn install && webpack --env.development --watch --progress --colors"
+    "client": "yarn install && webpack --env.development --watch --progress --colors",
+    "server": "nodemon src/server/index.js",
+    "dev": "concurrently \"yarn server\" \"yarn client\""
   },
   "author": "JJ Jacobs <jrjacobs24@gmail.com>",
   "license": "MIT",
