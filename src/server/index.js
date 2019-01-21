@@ -32,6 +32,15 @@ low(adapter)
         .then(note => res.send(note));
     });
 
+    app.post('/deleteNote', (req, res) => {
+      db.get('notes')
+        .remove({ id: req.body.id })
+        .write();
+
+      const notes = db.get('notes').value();
+      res.send(notes);
+    });
+
     app.get('*', (req, res) => {
       res.sendFile(path.resolve(__dirname, '../../dist/index.html'));
     })

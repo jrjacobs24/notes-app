@@ -3,13 +3,25 @@ import { LOCATION_CHANGE } from 'connected-react-router';
 import axios from 'axios';
 import * as noteDialogActions from 'actions/noteDialogActions';
 import * as databaseActions from 'actions/databaseActions';
+import * as noteCardActions from 'actions/noteCardActions';
 import { getNotes } from 'reducers/notesReducer';
 
 export default function* rootSaga() {
   yield all([
     takeEvery(LOCATION_CHANGE, handleLocationChange),
     takeLatest(noteDialogActions.clickSubmitNoteButton, handleNoteSubmit),
+    takeEvery(noteCardActions.clickDeleteNoteButton, removeNoteFromDB),
   ]);
+
+  function* removeNoteFromDB({ payload }) {
+    try {
+      const deleteNoteResponse = yield call([axios, 'post'], '/deleteNote', { id: payload });
+      yield put(databaseActions.receiveNotesFromDB(deleteNoteResponse.data));
+    } catch (e) {
+      console.log(e);
+      return;
+    }
+  }
 
   /**
    * If the notes array in the store is empty, fetch notes from the DB

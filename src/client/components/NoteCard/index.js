@@ -1,6 +1,8 @@
 import React from 'react';
 import T from 'prop-types';
+import { connect } from 'react-redux';
 import styled from '@emotion/styled';
+import * as noteCardActions from 'actions/noteCardActions';
 import {
   Card,
   CardContent,
@@ -20,7 +22,7 @@ const CardWrapper = styled(Card)`
   max-width: 320px;
 `;
 
-const NoteCard = ({ note: { id, title, content } }) => (
+const NoteCard = ({ note: { id, title, content }, onDeleteClick }) => (
   <Grid item>
     <CardWrapper>
       <CardContent>
@@ -28,7 +30,7 @@ const NoteCard = ({ note: { id, title, content } }) => (
         <Typography>{content}</Typography>
       </CardContent>
       <CardActions>
-        <IconButton onClick={() => {}}>
+        <IconButton onClick={() => onDeleteClick(id)}>
           <DeleteIcon />
         </IconButton>
         <IconButton onClick={() => {}}>
@@ -47,4 +49,9 @@ NoteCard.propTypes = {
   })
 };
 
-export default NoteCard;
+export default connect(
+  null,
+  {
+    onDeleteClick: noteCardActions.clickDeleteNoteButton
+  }
+)(NoteCard);
