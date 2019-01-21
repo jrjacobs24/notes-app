@@ -6,6 +6,7 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const low = require('lowdb');
+const shortid = require('shortid');
 const FileAsync = require('lowdb/adapters/FileAsync');
 
 // Create the server
@@ -21,6 +22,14 @@ low(adapter)
     app.get('/getNotes', (req, res) => {
       const notes = db.get('notes').value();
       res.send(notes);
+    });
+
+    app.post('/addNote', (req, res) => {
+      db.get('notes')
+        .push({ ...req.body, id: shortid.generate() })
+        .last()
+        .write()
+        .then(note => res.send(note));
     });
 
     app.get('*', (req, res) => {

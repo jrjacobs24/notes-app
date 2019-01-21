@@ -6,6 +6,7 @@ const initialState = [];
 export default createReducer(
   {
     [databaseActions.receiveNotesFromDB]: (state, notes) => notes,
+    [databaseActions.addNoteFromDB]: (state, note) => [...state, note],
   },
   initialState
 );

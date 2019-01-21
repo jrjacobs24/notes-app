@@ -6,18 +6,20 @@ import { isDialogOpen } from 'reducers/noteDialogReducer';
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
 import NoteForm from 'components/NoteForm';
 
+const formID = 'note-form';
+
 const NoteDialog = ({ open = false, onClickCancel }) => {
   return (
     <Dialog open={open}>
       <DialogTitle>Add New Note</DialogTitle>
       <DialogContent>
-        <NoteForm />
+        <NoteForm formID={formID} />
       </DialogContent>
       <DialogActions>
         <Button variant="text" size="small" onClick={onClickCancel}>
           Cancel
         </Button>
-        <Button variant="text" size="small" color="primary" type="submit" form="">
+        <Button variant="text" size="small" color="primary" type="submit" form={formID}>
           Submit
         </Button>
       </DialogActions>

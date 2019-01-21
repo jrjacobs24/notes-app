@@ -6,3 +6,4 @@ const dbAction = (title, ...args) => createAction(`Database > ${title}`, ...args
  * Database Responses
  */
 export const receiveNotesFromDB = dbAction('Received notes from DB');
+export const addNoteFromDB = dbAction('Note added from DB');

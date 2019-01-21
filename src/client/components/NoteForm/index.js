@@ -15,6 +15,7 @@ class NoteForm extends React.Component {
     id: T.string,
     title: T.string,
     content: T.string,
+    formID: T.string.isRequired,
     onSubmit: T.func.isRequired,
   };
 
@@ -41,7 +42,7 @@ class NoteForm extends React.Component {
 
   render() {
     return (
-      <form id="note-form" onSubmit={this.handleSubmit}>
+      <form id={this.props.formID} onSubmit={this.handleSubmit}>
         <TextField
           value={this.state.title}
           onChange={this.handleChange}
