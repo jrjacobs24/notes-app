@@ -18,6 +18,11 @@ const adapter = new FileAsync('db.json');
 
 low(adapter)
   .then(db => {
+    app.get('/getNotes', (req, res) => {
+      const notes = db.get('notes').value();
+      res.send(notes);
+    });
+
     app.get('*', (req, res) => {
       res.sendFile(path.resolve(__dirname, '../../dist/index.html'));
     })

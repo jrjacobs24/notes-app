@@ -3930,6 +3930,10 @@ recast@~0.11.12:
     react-lifecycles-compat "^3.0.2"
     symbol-observable "^1.0.4"
 
+redux-act@^1.7.4:
+  version "1.7.4"
+  resolved "https://registry.yarnpkg.com/redux-act/-/redux-act-1.7.4.tgz#0dd7c6daaca98649540a3d42c259814b048bd8e1"
+
 redux@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.1.tgz#436cae6cc40fbe4727689d7c8fae44808f1bfef5"
