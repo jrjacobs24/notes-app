@@ -2,6 +2,7 @@ import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import ScreenHeader from 'components/ScreenHeader';
 import ContentWrapper from 'components/ContentWrapper';
+import NotesList from 'components/NotesList';
 import NoteDialog from 'components/NoteDialog';
 import 'normalize.css';
 
@@ -12,7 +13,7 @@ class App extends React.Component {
         <CssBaseline />
         <ScreenHeader />
         <ContentWrapper>
-          <div>Hello World</div>
+          <NotesList />
           <NoteDialog />
         </ContentWrapper>
       </React.Fragment>
