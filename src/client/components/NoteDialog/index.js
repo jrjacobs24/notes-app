@@ -2,16 +2,17 @@ import React from 'react';
 import T from 'prop-types';
 import { connect } from 'react-redux';
 import * as noteDialogActions from 'actions/noteDialogActions';
-import { isDialogOpen } from 'reducers/noteDialogReducer';
+import { isDialogOpen, getDialogStatus } from 'reducers/noteDialogReducer';
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
 import NoteForm from 'components/NoteForm';
 
 const formID = 'note-form';
 
-const NoteDialog = ({ open = false, onClickCancel }) => {
+const NoteDialog = ({ open = false, status, onClickCancel }) => {
+  const title = status === 'edit' ? 'Edit Note' : 'Add Note';
   return (
     <Dialog open={open}>
-      <DialogTitle>Add New Note</DialogTitle>
+      <DialogTitle>{title}</DialogTitle>
       <DialogContent>
         <NoteForm formID={formID} />
       </DialogContent>
@@ -29,12 +30,14 @@ const NoteDialog = ({ open = false, onClickCancel }) => {
 
 NoteDialog.propTypes = {
   open: T.bool,
+  status: T.string.isRequired,
   onClickCancel: T.func.isRequired,
 };
 
 export default connect(
   state => ({
     open: isDialogOpen(state),
+    status: getDialogStatus(state),
   }),
   {
     onClickCancel: noteDialogActions.clickCancelButton,
