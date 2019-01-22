@@ -6,5 +6,8 @@ export const openNewNoteDialog = createAction('Open the New Note dialog');
 const noteDialogAction = (title, ...args) => createAction(`Note Dialog > ${title}`, ...args);
 
 // TODO illustrate `noteObj` shape via payloadReducer
-export const clickSubmitNoteButton = noteDialogAction('Click Submit Note button', noteObj => noteObj);
+export const clickSubmitNoteButton = noteDialogAction(
+  'Click Submit Note button',
+  ({ id, title, content }) => ({ id, title, content })
+);
 export const clickCancelButton = noteDialogAction('Click Cancel button');
