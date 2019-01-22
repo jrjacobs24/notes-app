@@ -22,7 +22,7 @@ const CardWrapper = styled(Card)`
   max-width: 320px;
 `;
 
-const NoteCard = ({ note: { id, title, content }, onDeleteClick }) => (
+const NoteCard = ({ note: { id, title, content }, onDeleteClick, onEditClick }) => (
   <Grid item>
     <CardWrapper>
       <CardContent>
@@ -33,7 +33,7 @@ const NoteCard = ({ note: { id, title, content }, onDeleteClick }) => (
         <IconButton onClick={() => onDeleteClick(id)}>
           <DeleteIcon />
         </IconButton>
-        <IconButton onClick={() => {}}>
+        <IconButton onClick={() => onEditClick(id)}>
           <EditIcon />
         </IconButton>
       </CardActions>
@@ -52,6 +52,7 @@ NoteCard.propTypes = {
 export default connect(
   null,
   {
-    onDeleteClick: noteCardActions.clickDeleteNoteButton
+    onDeleteClick: noteCardActions.clickDeleteNoteButton,
+    onEditClick: noteCardActions.clickEditNoteButton,
   }
 )(NoteCard);

@@ -1,5 +1,7 @@
 import { createAction } from 'redux-act';
 
+export const setActiveID = createAction('Set `activeID` from URL path', id => id);
+
 const noteDialogAction = (title, ...args) => createAction(`Note Dialog > ${title}`, ...args);
 
 // TODO illustrate `noteObj` shape via payloadReducer

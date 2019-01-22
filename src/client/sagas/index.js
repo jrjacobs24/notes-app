@@ -1,37 +1,36 @@
 import { takeLatest, takeEvery, all, call, put, select } from 'redux-saga/effects';
 import { LOCATION_CHANGE } from 'connected-react-router';
 import axios from 'axios';
+import cleanPath from 'utils/cleanPath';
 import * as noteDialogActions from 'actions/noteDialogActions';
 import * as databaseActions from 'actions/databaseActions';
-import * as noteCardActions from 'actions/noteCardActions';
 import { getNotes } from 'reducers/notesReducer';
+import noteCardEffects from './noteCardEffects';
+import noteDialogEffects from './noteDialogEffects';
+
+export const rootPath = '/';
 
 export default function* rootSaga() {
   yield all([
     takeEvery(LOCATION_CHANGE, handleLocationChange),
-    takeLatest(noteDialogActions.clickSubmitNoteButton, handleNoteSubmit),
-    takeEvery(noteCardActions.clickDeleteNoteButton, removeNoteFromDB),
+    ...noteDialogEffects,
+    ...noteCardEffects,
   ]);
 
-  function* removeNoteFromDB({ payload }) {
-    try {
-      const deleteNoteResponse = yield call([axios, 'post'], '/deleteNote', { id: payload });
-      yield put(databaseActions.receiveNotesFromDB(deleteNoteResponse.data));
-    } catch (e) {
-      console.log(e);
-      return;
-    }
-  }
-
   /**
-   * If the notes array in the store is empty, fetch notes from the DB
+   * If the notes array in the store is empty, fetch notes from the DB, then check to see if we need
+   * to set an `activeID` to launch the NoteDialog
    */
   function* handleLocationChange({ payload }) {
     let notes = yield select(getNotes);
 
     if (!notes.length) {
       yield call(fetchNotesFromDB);
+      // Update our notes var for checking in `maybeSetActiveID`
+      notes = yield select(getNotes);
     }
+
+    yield call(maybeSetActiveID, payload.location.pathname, notes);
   }
 
   /**
@@ -47,21 +46,20 @@ export default function* rootSaga() {
     }
   }
 
-  function* handleNoteSubmit({ payload }) {
-    yield call(addNoteToDB, payload);
-  }
-
   /**
-   * Add Note
-   *
-   * @param {Object} note
+   * Open the NoteDialog if we're on a note-specific route
    */
-  function* addNoteToDB(note) {
-    try {
-      const addNoteResponse = yield call([axios, 'post'], '/addNote', { ...note });
-      yield put(databaseActions.addNoteFromDB(addNoteResponse.data));
-    } catch (e) {
-      console.log(e);
+  function* maybeSetActiveID(path, notes) {
+    if (path === rootPath) {
+      return;
+    }
+
+    const id = yield call(cleanPath, path);
+    const idExists = yield call([notes, notes.find], n => n.id === id);
+
+    if (id && idExists) {
+      yield put(noteDialogActions.setActiveID(id));
+    } else {
       return;
     }
   }

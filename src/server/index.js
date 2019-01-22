@@ -32,6 +32,14 @@ low(adapter)
         .then(note => res.send(note));
     });
 
+    app.post('/editNote', (req, res) => {
+      db.get('notes')
+        .find({ id: req.body.id })
+        .assign(req.body)
+        .write()
+        .then(note => res.send(note));
+    })
+
     app.post('/deleteNote', (req, res) => {
       db.get('notes')
         .remove({ id: req.body.id })

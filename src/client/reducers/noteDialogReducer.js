@@ -9,7 +9,10 @@ const initialState = {
 export default createReducer(
   {
     [screenHeaderActions.clickNewNoteButton]: () => ({
-      open: true
+      open: true,
+    }),
+    [noteDialogActions.setActiveID]: () => ({
+      open: true,
     }),
     [noteDialogActions.clickSubmitNoteButton]: () => initialState,
     [noteDialogActions.clickCancelButton]: () => initialState,

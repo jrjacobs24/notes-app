@@ -2,6 +2,8 @@ import React from 'react';
 import T from 'prop-types';
 import { connect } from 'react-redux';
 import * as noteDialogActions from 'actions/noteDialogActions';
+import { getActiveID } from 'reducers/activeIDReducer';
+import { getNote } from 'reducers/notesReducer';
 import { TextField } from '@material-ui/core';
 
 class NoteForm extends React.Component {
@@ -70,7 +72,17 @@ class NoteForm extends React.Component {
 }
 
 export default connect(
-  null,
+  state => {
+    const activeID = getActiveID(state);
+
+    if (activeID) {
+      return {
+        ...getNote(state, activeID),
+      };
+    }
+
+    return {};
+  },
   {
     onSubmit: noteDialogActions.clickSubmitNoteButton,
   }
