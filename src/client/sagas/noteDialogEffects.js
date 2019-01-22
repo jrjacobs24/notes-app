@@ -1,4 +1,4 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { call, put, select, takeEvery } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 import axios from 'axios';
 import { getRouterLocation } from 'reducers';
@@ -8,8 +8,8 @@ import * as noteDialogActions from 'actions/noteDialogActions';
 import * as databaseActions from 'actions/databaseActions';
 
 export default [
-  takeLatest(noteDialogActions.clickSubmitNoteButton, handleNoteSubmit),
-  takeLatest(noteDialogActions.clickCancelButton, handleCancelClick),
+  takeEvery(noteDialogActions.clickSubmitNoteButton, handleNoteSubmit),
+  takeEvery(noteDialogActions.clickCancelButton, handleCancelClick),
 ];
 
 function* handleNoteSubmit({ payload }) {

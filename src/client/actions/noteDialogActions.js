@@ -1,6 +1,7 @@
 import { createAction } from 'redux-act';
 
 export const setActiveID = createAction('Set `activeID` from URL path', id => id);
+export const openNewNoteDialog = createAction('Open the New Note dialog');
 
 const noteDialogAction = (title, ...args) => createAction(`Note Dialog > ${title}`, ...args);
 

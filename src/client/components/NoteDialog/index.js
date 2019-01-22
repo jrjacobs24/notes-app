@@ -17,10 +17,10 @@ const NoteDialog = ({ open = false, status, onClickCancel }) => {
         <NoteForm formID={formID} />
       </DialogContent>
       <DialogActions>
-        <Button variant="text" size="small" onClick={onClickCancel}>
+        <Button variant="text" size="medium" onClick={onClickCancel}>
           Cancel
         </Button>
-        <Button variant="text" size="small" color="primary" type="submit" form={formID}>
+        <Button variant="text" size="medium" color="primary" type="submit" form={formID}>
           Submit
         </Button>
       </DialogActions>

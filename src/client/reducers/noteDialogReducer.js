@@ -1,6 +1,7 @@
 import { createReducer } from 'redux-act';
 import * as screenHeaderActions from 'actions/screenHeaderActions';
 import * as noteDialogActions from 'actions/noteDialogActions';
+import * as alertDialogActions from 'actions/alertDialogActions';
 
 const initialState = {
   open: false,
@@ -19,6 +20,10 @@ export default createReducer(
     }),
     [noteDialogActions.clickSubmitNoteButton]: () => initialState,
     [noteDialogActions.clickCancelButton]: () => initialState,
+    [alertDialogActions.clickNewNoteButton]: () => ({
+      open: true,
+      status: 'add'
+    }),
   },
   initialState
 );

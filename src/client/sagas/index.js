@@ -1,12 +1,14 @@
-import { takeLatest, takeEvery, all, call, put, select } from 'redux-saga/effects';
+import { takeEvery, all, call, put, select } from 'redux-saga/effects';
 import { LOCATION_CHANGE } from 'connected-react-router';
 import axios from 'axios';
 import cleanPath from 'utils/cleanPath';
 import * as noteDialogActions from 'actions/noteDialogActions';
 import * as databaseActions from 'actions/databaseActions';
+import * as alertDialogActions from 'actions/alertDialogActions';
 import { getNotes } from 'reducers/notesReducer';
 import noteCardEffects from './noteCardEffects';
 import noteDialogEffects from './noteDialogEffects';
+import alertDialogEffects from './alertDialogEffects';
 
 export const rootPath = '/';
 
@@ -15,6 +17,7 @@ export default function* rootSaga() {
     takeEvery(LOCATION_CHANGE, handleLocationChange),
     ...noteDialogEffects,
     ...noteCardEffects,
+    ...alertDialogEffects,
   ]);
 
   /**
@@ -60,7 +63,7 @@ export default function* rootSaga() {
     if (id && idExists) {
       yield put(noteDialogActions.setActiveID(id));
     } else {
-      return;
+      yield put(alertDialogActions.showAlert('No note with that ID exists.'));
     }
   }
 }

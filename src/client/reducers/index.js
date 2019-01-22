@@ -3,6 +3,7 @@ import { connectRouter } from 'connected-react-router';
 import notes from './notesReducer';
 import noteDialog from './noteDialogReducer';
 import activeID from './activeIDReducer';
+import alertDialog from './alertReducer';
 
 export default history =>  combineReducers(
   {
@@ -10,6 +11,7 @@ export default history =>  combineReducers(
     notes,
     noteDialog,
     activeID,
+    alertDialog,
   }
 );
 

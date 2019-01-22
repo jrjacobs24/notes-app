@@ -4,6 +4,7 @@ import ScreenHeader from 'components/ScreenHeader';
 import ContentWrapper from 'components/ContentWrapper';
 import NotesList from 'components/NotesList';
 import NoteDialog from 'components/NoteDialog';
+import AlertDialog from 'components/AlertDialog';
 import 'normalize.css';
 
 class App extends React.Component {
@@ -15,6 +16,7 @@ class App extends React.Component {
         <ContentWrapper>
           <NotesList />
           <NoteDialog />
+          <AlertDialog />
         </ContentWrapper>
       </React.Fragment>
     );
