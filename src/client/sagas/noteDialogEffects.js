@@ -9,6 +9,7 @@ import * as databaseActions from 'actions/databaseActions';
 
 export default [
   takeLatest(noteDialogActions.clickSubmitNoteButton, handleNoteSubmit),
+  takeLatest(noteDialogActions.clickCancelButton, handleCancelClick),
 ];
 
 function* handleNoteSubmit({ payload }) {
@@ -48,5 +49,17 @@ function* updateNoteInDB(note) {
   } catch (e) {
     console.log(e);
     return;
+  }
+}
+
+/**
+ * Route the user back to the root path if on a note id route. Could've handled this differently by
+ * just using the Link component from `react-router-dom` but I wanted to keep the pattern of
+ * action -> reducer -> side-effect going, but could definitely be done the more traditional way.
+ */
+function* handleCancelClick() {
+  const { pathname } = yield select(getRouterLocation);
+  if (pathname !== rootPath) {
+    yield put(push(rootPath));
   }
 }
