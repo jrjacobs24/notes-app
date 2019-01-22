@@ -12,19 +12,16 @@ const ScreenHeader = ({ onNewNoteClick }) => (
         Notes For the Taking
       </Typography>
       <Button color="inherit" onClick={onNewNoteClick}>
-        <AddIcon /> New Note
+        <AddIcon />
+        New Note
       </Button>
     </Toolbar>
   </AppBar>
 );
 
-ScreenHeader.propTypes = {
-  onNewNoteClick: T.func.isRequired
-};
+ScreenHeader.propTypes = { onNewNoteClick: T.func.isRequired };
 
 export default connect(
   null,
-  {
-    onNewNoteClick: screenHeaderActions.clickNewNoteButton,
-  }
+  { onNewNoteClick: screenHeaderActions.clickNewNoteButton }
 )(ScreenHeader);

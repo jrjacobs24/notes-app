@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogActions, Typography, Button } from '@mater
 import { clickCloseButton, clickNewNoteButton } from 'actions/alertDialogActions';
 import { isAlertOpen, getAlertMsg } from 'reducers/alertReducer';
 
-const AlertDialog = ({ open = false, msg = '', onClickClose, onClickNewNote }) => (
+const AlertDialog = ({ open, msg, onClickClose, onClickNewNote }) => (
   <Dialog open={open}>
     <DialogContent>
       <Typography>{msg}</Typography>
@@ -20,6 +20,11 @@ const AlertDialog = ({ open = false, msg = '', onClickClose, onClickNewNote }) =
     </DialogContent>
   </Dialog>
 );
+
+AlertDialog.defaultProps = {
+  open: false,
+  msg: '',
+};
 
 AlertDialog.propTypes = {
   open: T.bool,

@@ -9,7 +9,7 @@ export default [
   takeEvery(noteCardActions.clickDeleteNoteButton, removeNoteFromDB),
 ];
 
-function * handleEditNoteClick({ payload }) {
+function* handleEditNoteClick({ payload }) {
   yield put(push(`/${payload}`));
 }
 
@@ -19,6 +19,5 @@ function* removeNoteFromDB({ payload }) {
     yield put(databaseActions.receiveNotesFromDB(deleteNoteResponse.data));
   } catch (e) {
     console.log(e);
-    return;
   }
 }

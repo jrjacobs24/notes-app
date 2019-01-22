@@ -8,7 +8,7 @@ import NoteForm from 'components/NoteForm';
 
 const formID = 'note-form';
 
-const NoteDialog = ({ open = false, status, onClickCancel }) => {
+const NoteDialog = ({ open, status, onClickCancel }) => {
   const title = status === 'edit' ? 'Edit Note' : 'Add Note';
   return (
     <Dialog open={open}>
@@ -26,7 +26,9 @@ const NoteDialog = ({ open = false, status, onClickCancel }) => {
       </DialogActions>
     </Dialog>
   );
-}
+};
+
+NoteDialog.defaultProps = { open: false };
 
 NoteDialog.propTypes = {
   open: T.bool,
@@ -39,7 +41,5 @@ export default connect(
     open: isDialogOpen(state),
     status: getDialogStatus(state),
   }),
-  {
-    onClickCancel: noteDialogActions.clickCancelButton,
-  }
+  { onClickCancel: noteDialogActions.clickCancelButton }
 )(NoteDialog);

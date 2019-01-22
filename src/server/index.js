@@ -18,7 +18,7 @@ app.use(bodyParser.json(), express.static('dist'));
 const adapter = new FileAsync('db.json');
 
 low(adapter)
-  .then(db => {
+  .then((db) => {
     app.get('/getNotes', (req, res) => {
       const notes = db.get('notes').value();
       res.send(notes);
@@ -38,7 +38,7 @@ low(adapter)
         .assign(req.body)
         .write()
         .then(note => res.send(note));
-    })
+    });
 
     app.post('/deleteNote', (req, res) => {
       db.get('notes')
@@ -51,10 +51,11 @@ low(adapter)
 
     app.get('*', (req, res) => {
       res.sendFile(path.resolve(__dirname, '../../dist/index.html'));
-    })
+    });
+
     return db.defaults({ notes: [] }).write();
   })
   .then(() => {
     const port = 8080;
-    app.listen(port, () => console.log('Listening on port ' + port));
+    app.listen(port, () => console.log(`Listening on port ${port}`));
   });

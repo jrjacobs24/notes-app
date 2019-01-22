@@ -5,7 +5,7 @@ import noteDialog from './noteDialogReducer';
 import activeID from './activeIDReducer';
 import alertDialog from './alertReducer';
 
-export default history =>  combineReducers(
+export default history => combineReducers(
   {
     router: connectRouter(history),
     notes,

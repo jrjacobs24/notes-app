@@ -46,7 +46,9 @@ NoteCard.propTypes = {
     id: T.string.isRequired,
     title: T.string.isRequired,
     content: T.string.isRequired,
-  })
+  }).isRequired,
+  onDeleteClick: T.func.isRequired,
+  onEditClick: T.func.isRequired,
 };
 
 export default connect(

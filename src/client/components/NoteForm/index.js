@@ -25,9 +25,11 @@ class NoteForm extends React.Component {
   constructor(props) {
     super(props);
 
+    const { title, content } = this.props;
+
     this.state = {
-      title: this.props.title,
-      content: this.props.content,
+      title,
+      content,
       errors: {},
     };
 
@@ -49,24 +51,21 @@ class NoteForm extends React.Component {
     ];
   }
 
-  handleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
+  handleChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
   }
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     const errors = this.validateForm(this.state);
 
     if (!isEmpty(errors)) {
-      this.setState({
-        errors
-      });
+      this.setState({ errors });
       return;
     }
 
-    this.props.onSubmit({ id: this.props.id, ...this.state });
+    const { onSubmit, id } = this.props;
+    onSubmit({ id, ...this.state });
   }
 
   /**
@@ -74,9 +73,12 @@ class NoteForm extends React.Component {
    * and return an Obj of `name: message` pairs for any fields that failed validation.
    */
   validateForm = () => this.formData
-    .map(({ name, validation: { isValid, message } }) => (
-      !isValid(this.state[name]) && ({ name, message })
-    ))
+    .map(({ name, validation: { isValid, message } }) => {
+      const { [name]: value } = this.state;
+      return (
+        !isValid(value) && ({ name, message })
+      );
+    })
     .filter(e => !!e)
     .reduce((acc, curr) => {
       acc[curr.name] = curr.message;
@@ -84,29 +86,31 @@ class NoteForm extends React.Component {
     }, {});
 
   render() {
+    const { formID } = this.props;
+    const { title, content, errors } = this.state;
     return (
-      <form id={this.props.formID} onSubmit={this.handleSubmit}>
+      <form id={formID} onSubmit={this.handleSubmit}>
         <TextField
-          value={this.state.title}
+          value={title}
           onChange={this.handleChange}
           id="note-title"
           name="title"
           label="Title"
           placeholder="Add a title"
           margin="dense"
-          error={!!this.state.errors['title']}
-          helperText={this.state.errors['title']}
+          error={!!errors.title}
+          helperText={errors.title}
         />
         <TextField
-          value={this.state.content}
+          value={content}
           onChange={this.handleChange}
           id="note-content"
           name="content"
           label="Content"
           placeholder="Take a note..."
           margin="dense"
-          error={!!this.state.errors['content']}
-          helperText={this.state.errors['content']}
+          error={!!errors.content}
+          helperText={errors.content}
           multiline
           fullWidth
           autoFocus
@@ -117,18 +121,14 @@ class NoteForm extends React.Component {
 }
 
 export default connect(
-  state => {
+  (state) => {
     const activeID = getActiveID(state);
 
     if (activeID) {
-      return {
-        ...getNote(state, activeID),
-      };
+      return { ...getNote(state, activeID) };
     }
 
     return {};
   },
-  {
-    onSubmit: noteDialogActions.clickSubmitNoteButton,
-  }
+  { onSubmit: noteDialogActions.clickSubmitNoteButton }
 )(NoteForm);

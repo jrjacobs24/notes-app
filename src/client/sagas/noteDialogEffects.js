@@ -35,7 +35,6 @@ function* addNoteToDB(note) {
     yield put(databaseActions.addNoteFromDB(addNoteResponse.data));
   } catch (e) {
     console.log(e);
-    return;
   }
 }
 
@@ -48,7 +47,6 @@ function* updateNoteInDB(note) {
     yield put(databaseActions.updateNoteFromDB(editNoteResponse.data));
   } catch (e) {
     console.log(e);
-    return;
   }
 }
 

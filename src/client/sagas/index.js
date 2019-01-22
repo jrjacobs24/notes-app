@@ -45,7 +45,6 @@ export default function* rootSaga() {
       yield put(databaseActions.receiveNotesFromDB(fetchNotesResponse.data));
     } catch (e) {
       console.log(e);
-      return;
     }
   }
 
