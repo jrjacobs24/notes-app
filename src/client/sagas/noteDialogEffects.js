@@ -15,38 +15,24 @@ export default [
 function* handleNoteSubmit({ payload }) {
   const existingNote = yield select(getNote, payload.id);
 
+  // Add the note to the DB if it doesn't exist in our store.
+  // Otherwise update the note object in the DB and then in our store
   if (!existingNote) {
-    yield call(addNoteToDB, payload);
+    try {
+      const addNoteResponse = yield call([axios, 'post'], '/addNote', { ...payload });
+      yield put(databaseActions.addNoteFromDB(addNoteResponse.data));
+    } catch (e) {
+      console.log(e);
+    }
   } else {
     // Update the URL to our root path
     yield put(push(rootPath));
-    yield call(updateNoteInDB, payload);
-  }
-}
-
-/**
- * Add Note
- *
- * @param {Object} note
- */
-function* addNoteToDB(note) {
-  try {
-    const addNoteResponse = yield call([axios, 'post'], '/addNote', { ...note });
-    yield put(databaseActions.addNoteFromDB(addNoteResponse.data));
-  } catch (e) {
-    console.log(e);
-  }
-}
-
-/**
- * Edit/Update Note
- */
-function* updateNoteInDB(note) {
-  try {
-    const editNoteResponse = yield call([axios, 'post'], '/editNote', { ...note });
-    yield put(databaseActions.updateNoteFromDB(editNoteResponse.data));
-  } catch (e) {
-    console.log(e);
+    try {
+      const editNoteResponse = yield call([axios, 'post'], '/editNote', { ...payload });
+      yield put(databaseActions.updateNoteFromDB(editNoteResponse.data));
+    } catch (e) {
+      console.log(e);
+    }
   }
 }
 

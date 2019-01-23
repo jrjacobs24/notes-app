@@ -1,6 +1,7 @@
 import { LOCATION_CHANGE } from 'connected-react-router';
 import axios from 'axios';
 import sagaUtil from 'utils/sagaTestingUtil';
+import { getAction, getPayload } from 'utils/actionTestingUtils';
 import * as databaseActions from 'actions/databaseActions';
 import * as noteDialogActions from 'actions/noteDialogActions';
 import * as alertDialogActions from 'actions/alertDialogActions';
@@ -23,7 +24,7 @@ describe('The `handleLocationChange` effect', () => {
     store.clearActions();
   });
 
-  it('should dispatch `receiveNotesFromDB` if no notes exist in the store', () => {
+  it('should dispatch `receiveNotesFromDB` with a notes array payload if no notes exist in the store', () => {
     getNotes.mockReturnValueOnce([]);
     axios.get.mockReturnValueOnce({ data: mockNotes });
     store.dispatch({ type: LOCATION_CHANGE, payload: { location: { pathname: '/' } } });
@@ -45,11 +46,3 @@ describe('The `handleLocationChange` effect', () => {
     expect(getAction(store, alertDialogActions.showAlert)).not.toBeUndefined();
   });
 });
-
-function getPayload(localStore, actionName) {
-  return getAction(localStore, actionName).payload;
-}
-
-function getAction(localStore, actionName) {
-  return localStore.getActions().find(action => action.type === actionName.getType());
-}
