@@ -30,6 +30,7 @@ export function* handleLocationChange({ payload }) {
 
   const path = payload.location.pathname;
 
+  // Don't need to check for an ID in the route if on the root path
   if (path === rootPath) {
     return;
   }

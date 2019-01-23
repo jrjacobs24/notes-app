@@ -22,7 +22,8 @@
     "no-var": 0,
     "object-curly-newline": [1, { "multiline": true }],
     "comma-dangle": 0,
-    "no-confusing-arrow": [2, {"allowParens": true}]
+    "no-confusing-arrow": [2, {"allowParens": true}],
+    "no-console": 0
   },
   "plugins": [
     "import"
